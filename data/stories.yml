@@ -1,0 +1,40 @@
+version: "3.0"
+stories:
+  - story: happy path 2
+    steps:
+      - intent: request_network
+      - action: action_answer_brief
+  - story: happy path 3
+    steps:
+      - intent: query_attacktype
+      - action: action_query_attacktype
+  - story: happy path 4
+    steps:
+      - intent: query_domain
+      - action: action_query_domain
+  - story: happy path 5
+    steps:
+      - intent: query_ip
+      - action: action_query_ip
+  - story: happy path 6
+    steps:
+      - intent: query_sha256
+      - action: action_query_sha256
+  - story: multiple_rounds path
+    steps:
+      - intent: multiple_rounds_first
+      - action: utter_first
+      - intent: multiple_rounds_second
+      - action: utter_second
+  - story: happy path 7
+    steps:
+      - intent: query_from
+      - action: action_query_from
+  - story: happy path 8
+    steps:
+      - intent: query_attack
+      - action: action_query_attack
+  - story: happy path 9
+    steps:
+      - intent: query_org_via_attacktype
+      - action: action_query_org_via_attacktype

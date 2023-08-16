@@ -1,0 +1,8 @@
+events.db*
+rasa.db
+models/
+log/
+__pycache__/*
+.rasa
+/bert_base_chinese/
+/offline_model/

@@ -1,0 +1,85 @@
+version: "3.0"
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+  - request_network
+  - query_attacktype
+  - query_domain
+  - query_ip
+  - query_sha256
+  - multiple_rounds_first
+  - multiple_rounds_second
+  - query_attack
+  - query_from
+  - query_org_via_attacktype
+entities:
+  - organization
+  - attribute
+  - attacktypes
+  - domain
+  - ip
+  - sha256
+  - area
+slots:
+  organization:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: organization
+  attribute:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: attribute
+  attacktype:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: attacktype
+  domain:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: domain
+  ip:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: ip
+  sha256:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: sha256
+  area:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: area
+responses:
+  utter_request_network:
+    - text: 你好，{organization}是一种网络入侵！
+  utter_first:
+    - text: 请问你需要询问黄金鼠的什么？
+  utter_second:
+    - text: 黄金鼠组织长期针对叙利亚等阿拉伯国家进行网络攻击。攻击平台从开始的Windows平台逐渐扩展至Android平台。恶意样本主要伪装成聊天软件及一些特定领域常用软件，通过水坑攻击方式配合社会工程学手段进行渗透，向特定目标人群进行攻击。该组织在攻击过程中使用了大量的资源，说明其资源丰富。并且他们的攻击主要以窃取信息为主的间谍活动。
+actions:
+  - utter_first
+  - utter_second
+  - utter_request_network
+  - action_answer_brief
+  - action_query_attacktype
+  - action_query_domain
+  - action_query_ip
+  - action_query_sha256
+  - action_query_from
+  - action_query_attack
+  - action_query_org_via_attacktype
