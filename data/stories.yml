@@ -38,3 +38,24 @@ stories:
     steps:
       - intent: query_org_via_attacktype
       - action: action_query_org_via_attacktype
+  - story: happy path 10
+    steps:
+      - intent: query_org_via_industry
+      - action: action_query_org_via_industry
+  - story: happy path 11
+    steps:
+      - intent: query_industry_via_org
+      - action: action_query_industry_via_org
+  - story: happy path 12
+    steps:
+      - intent: query_org_via_ip
+      - action: action_query_org_via_ip
+  - story: happy path 13
+    steps:
+      - intent: query_org_via_domain
+      - action: action_query_org_via_domain
+  - story: happy path 14
+    steps:
+      - intent: query_org_via_sha256
+      - action: action_query_org_via_sha256
+

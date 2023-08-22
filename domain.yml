@@ -13,14 +13,23 @@ intents:
   - query_attack
   - query_from
   - query_org_via_attacktype
+  - query_org_via_industry
+  - query_industry_via_org
+  - query_org_via_ip
+  - query_org_via_domain
+  - query_org_via_sha256
 entities:
   - organization
   - attribute
-  - attacktypes
+  - attacktype
   - domain
   - ip
   - sha256
   - area
+  - industry
+  - ip_value
+  - domain_value
+  - sha256_value
 slots:
   organization:
     type: text
@@ -64,6 +73,30 @@ slots:
     mappings:
       - type: from_entity
         entity: area
+  industry:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: industry
+  ip_value:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: ip_value
+  domain_value:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: domain_value
+  sha256_value:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: sha256_value
 responses:
   utter_request_network:
     - text: 你好，{organization}是一种网络入侵！
@@ -83,3 +116,8 @@ actions:
   - action_query_from
   - action_query_attack
   - action_query_org_via_attacktype
+  - action_query_org_via_industry
+  - action_query_industry_via_org
+  - action_query_org_via_ip
+  - action_query_org_via_domain
+  - action_query_org_via_sha256

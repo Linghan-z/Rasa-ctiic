@@ -327,13 +327,167 @@ class ActionRequestip(Action):
             dispatcher.utter_message(text="没找到'{}'".format(name))
         else:
             relationship = list(relationship_matcher.match([find_node], r_type="organization_has_attacktype"))
+            print(relationship)
             str1 = '['
             for i in relationship:
-                str1 = str1 + i.start_node['name'] + ','
+                str1 = str1 + i.end_node['name'] + ','
             str1 = str1.strip(',')
             str1 = str1 + ']'
             if str1 == '[]':
                 dispatcher.utter_message(text="不存在使用'{}'的组织".format(name))
             else:
                 dispatcher.utter_message(text=str1)
+        return []
+
+
+# 攻击某个行业的组织
+class ActionRequestip(Action):
+    def name(self) -> Text:
+        return "action_query_org_via_industry"  # 对应domain.yml的动作名称
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
+        name = tracker.get_slot("industry")
+        find_node = node_matcer.match("industry").where(name=name).first()
+        if find_node is None:
+            dispatcher.utter_message(text="没找到'{}'".format(name))
+        else:
+            relationship = list(relationship_matcher.match([find_node], r_type="organization_has_industry"))
+            str1 = '['
+            for i in relationship:
+                str1 = str1 + i.end_node['name'] + ','
+            str1 = str1.strip(',')
+            str1 = str1 + ']'
+            if str1 == '[]':
+                dispatcher.utter_message(text="不存在攻击'{}'的组织".format(name))
+            else:
+                dispatcher.utter_message(text=str1)
+        return []
+
+
+# 组织主要攻击的行业
+class ActionRequestip(Action):
+    def name(self) -> Text:
+        return "action_query_industry_via_org"  # 对应domain.yml的动作名称
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
+        name = tracker.get_slot("organization")
+        find_node = node_matcer.match("organization").where(name=name).first()
+        if find_node is None:
+            dispatcher.utter_message(text="没找到'{}'".format(name))
+        else:
+            relationship = list(relationship_matcher.match([find_node], r_type="organization_has_industry"))
+            str1 = '['
+            for i in relationship:
+                str1 = str1 + i.end_node['name'] + ','
+            str1 = str1.strip(',')
+            str1 = str1 + ']'
+            if str1 == '[]':
+                dispatcher.utter_message(text="'{}'没有目标行业".format(name))
+            else:
+                dispatcher.utter_message(text=str1)
+        return []
+
+# 根据ip查询对应的组织
+class ActionRequestip(Action):
+    def name(self) -> Text:
+        return "action_query_org_via_ip"  # 对应domain.yml的动作名称
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
+        value = tracker.get_slot("ip_value")
+        find_node = node_matcer.match("ip").where(value=value).first()
+        print(find_node)
+        if find_node is None:
+            dispatcher.utter_message(text="没找到'{}'".format(value))
+        else:
+            relationship = list(relationship_matcher.match([find_node], r_type="organization_has_ip"))
+            print(relationship)
+            if relationship == []:
+                dispatcher.utter_message(text="找不到'{}'所属的组织".format(value))
+            str1 = '['
+            for i in relationship:
+                str1 = str1 + '{organization_name:"' + i.end_node['name'] + '",organization_introduction:"' + \
+                       i.end_node['introduction'] + '"},'
+            str1 = str1.strip(',')
+            str1 = str1 + ']'
+            dispatcher.utter_message(text=str1)
+        return []
+
+# 根据domain查询对应的组织
+class ActionRequestip(Action):
+    def name(self) -> Text:
+        return "action_query_org_via_domain"  # 对应domain.yml的动作名称
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
+        value = tracker.get_slot("domain_value")
+        find_node = node_matcer.match("domain").where(value=value).first()
+        print(find_node)
+        if find_node is None:
+            dispatcher.utter_message(text="没找到'{}'".format(value))
+        else:
+            relationship = list(relationship_matcher.match([find_node], r_type="organization_has_domain"))
+            print(relationship)
+            if relationship == []:
+                dispatcher.utter_message(text="找不到'{}'所属的组织".format(value))
+            str1 = '['
+            for i in relationship:
+                str1 = str1 + '{organization_name:"' + i.end_node['name'] + '",organization_introduction:"' + \
+                       i.end_node['introduction'] + '"},'
+            str1 = str1.strip(',')
+            str1 = str1 + ']'
+            dispatcher.utter_message(text=str1)
+        return []
+
+# 根据sha256查询对应的组织
+class ActionRequestip(Action):
+    def name(self) -> Text:
+        return "action_query_org_via_sha256"  # 对应domain.yml的动作名称
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
+        value = tracker.get_slot("sha256_value")
+        find_node = node_matcer.match("sha256").where(value=value).first()
+        print(find_node)
+        if find_node is None:
+            dispatcher.utter_message(text="没找到'{}'".format(value))
+        else:
+            relationship = list(relationship_matcher.match([find_node], r_type="organization_has_sha256"))
+            print(relationship)
+            if relationship == []:
+                dispatcher.utter_message(text="找不到'{}'所属的组织".format(value))
+            str1 = '['
+            for i in relationship:
+                str1 = str1 + '{organization_name:"' + i.end_node['name'] + '",organization_introduction:"' + \
+                       i.end_node['introduction'] + '"},'
+            str1 = str1.strip(',')
+            str1 = str1 + ']'
+            dispatcher.utter_message(text=str1)
         return []
